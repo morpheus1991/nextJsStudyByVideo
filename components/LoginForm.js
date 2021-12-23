@@ -2,11 +2,12 @@ import React, { useState, useCallback } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
-const LoginForm = () => {
+const LoginForm = ({ setIsLoggedIn }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const onChangeId = useCallback((e) => {
@@ -16,6 +17,11 @@ const LoginForm = () => {
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
   }, []);
+
+  const onSubmitForm = useCallback(() => {
+    console.log(id, password);
+    setIsLoggedIn(true);
+  }, [id, password]);
   // 컴포넌트에 프롭스로 넘겨주는 함수는 유즈콜백 사용하기 (최적화 관련)
 
   // 커스텀 훅으로 변경 여지 있음,
@@ -52,5 +58,7 @@ const LoginForm = () => {
     </Form>
   );
 };
-
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.bool.isRequired,
+};
 export default LoginForm;
